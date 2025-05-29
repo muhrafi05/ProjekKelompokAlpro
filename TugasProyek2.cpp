@@ -1,4 +1,6 @@
-#include<iostream>
+#include <iostream>
+#include <iomanip>
+#include <string>
 using namespace std;
 
 struct dataapotik{
@@ -208,24 +210,70 @@ void detailobat(dataapotik &d){
 	}
 }
 
-int main(){
+void menuUtama(){
 	dataapotik data;
 	
-	isidatapasien(data);
-	isidataobat(data);
+	int pilih;
 	
-	do{
-		menunamaobat(data);
-		cout<<"Masukkan nomor obat yang anda pilih : ";
-		cin>>data.pilihannomorobat;
-		system("cls");
-		detailobat(data);
-		cout<<"Apakah ada obat lain yang akan anda beli? (y/n) : ";
-		cin>>data.belilagi;
-		system("cls");
-		
-	}while(data.belilagi!='n');
+	do {
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~|                SELAMAT DATANG DI               |~\n";
+	    cout << "~|                   APOTEK K-24                  |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~| 1. Beli Obat                                   |~\n";
+	    cout << "~| 2. Stok Obat                                   |~\n";
+	    cout << "~| 3. Data Pembelian                              |~\n";
+	    cout << "~| 4. Data Pasien                                 |~\n";
+	    cout << "~| 5. Laporan Keuangan                            |~\n";
+	    cout << "~| 6. Keluar                                      |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
 	
-	cout<<"Total Bayar : "<<data.total;
-	return 0;
+	    cout << "Masukkan pilihan (1-6): ";
+	    cin >> pilih;
+	    cin.ignore();
+	
+	    switch (pilih) {
+	        case 1:
+	        	system("cls");
+	    		isidatapasien(data);
+	    		isidataobat(data);
+	    		do{
+					menunamaobat(data);
+					cout<<"Masukkan nomor obat yang anda pilih : ";
+					cin>>data.pilihannomorobat;
+					system("cls");
+					detailobat(data);
+					cout<<"Apakah ada obat lain yang akan anda beli? (y/n) : ";
+					cin>>data.belilagi;
+					system("cls");
+					
+				}while(data.belilagi!='n');
+				
+				cout<<"Total Bayar : "<<data.total << endl;
+				
+				system("pause");
+	        break;
+	        case 2:
+	        	system("cls");
+	        break;
+	        case 3:
+	        	system("cls");
+	        break;
+	        case 4:
+	        	system("cls");
+	        break;
+	        case 5:
+	        	system("cls");
+	        break;
+	        case 6:
+	        	cout << "Trima kasih! Program selesaii.\n";
+	        break;
+	        default:
+	            cout << "Pilihan tidak valid. coba lagi.\n";
+	    }
+	} while (pilih != 6);
+}
+
+int main(){
+	menuUtama();
 }
