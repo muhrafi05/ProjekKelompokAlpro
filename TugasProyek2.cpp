@@ -12,10 +12,31 @@ struct dataapotik{
 	int harga_stok[100][100];
 	int pilihannomorobat;
 	int jumlahobat;
-	int total=0;
+	int total;
 	char belilagi;
+	int pilihmenu;
 	
 };
+
+void menuutama(dataapotik &d){
+		system("cls");
+		
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~|                SELAMAT DATANG DI               |~\n";
+	    cout << "~|                   APOTEK K-24                  |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~| 1. Beli Obat                                   |~\n";
+	    cout << "~| 2. Stok Obat                                   |~\n";
+	    cout << "~| 3. Data Pembelian                              |~\n";
+	    cout << "~| 4. Data Pasien                                 |~\n";
+	    cout << "~| 5. Laporan Keuangan                            |~\n";
+	    cout << "~| 6. Keluar                                      |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	
+	    cout << "Masukkan pilihan (1-6): ";
+	    cin>>d.pilihmenu;
+	    cin.ignore();
+}
 
 void isidatapasien(dataapotik &d){
 	cout<<"Selamat Datang Di Apotik K-24"<<endl;
@@ -210,31 +231,10 @@ void detailobat(dataapotik &d){
 	}
 }
 
-void menuUtama(){
+void hasilpilihmenuutama(dataapotik &d){
 	dataapotik data;
 	
-	int pilih;
-	
-	do {
-		system("cls");
-		
-	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-	    cout << "~|                SELAMAT DATANG DI               |~\n";
-	    cout << "~|                   APOTEK K-24                  |~\n";
-	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-	    cout << "~| 1. Beli Obat                                   |~\n";
-	    cout << "~| 2. Stok Obat                                   |~\n";
-	    cout << "~| 3. Data Pembelian                              |~\n";
-	    cout << "~| 4. Data Pasien                                 |~\n";
-	    cout << "~| 5. Laporan Keuangan                            |~\n";
-	    cout << "~| 6. Keluar                                      |~\n";
-	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-	
-	    cout << "Masukkan pilihan (1-6): ";
-	    cin >> pilih;
-	    cin.ignore();
-	
-	    switch (pilih) {
+	switch (d.pilihmenu) {
 	        case 1:
 	        	system("cls");
 	    		isidatapasien(data);
@@ -281,9 +281,13 @@ void menuUtama(){
 	        default:
 	            cout << "Pilihan tidak valid. coba lagi.\n";
 	    }
-	} while (pilih != 6);
 }
-
 int main(){
-	menuUtama();
+	dataapotik data;
+	do{
+		
+		menuutama(data);
+		hasilpilihmenuutama(data);
+	}while(data.pilihmenu!=6);
+	
 }
