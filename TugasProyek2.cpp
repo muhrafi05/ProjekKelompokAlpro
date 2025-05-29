@@ -1,4 +1,4 @@
-#include<iostream> // test
+#include<iostream>
 using namespace std;
 
 struct dataapotik{
@@ -128,20 +128,83 @@ void menunamaobat(dataapotik &d){
 }
 
 void detailobat(dataapotik &d){
-	for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
-		cout<<"============================== Obat "<<i<<" =============================="<<endl;
-		cout<<endl;
-		cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
-		cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/strip"<<endl;
-		cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
-		cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
-		cout<<"===================================================================="<<endl;
-		cout<<endl;
-		cout<<"Jumlah obat yang dibeli : ";
-		cin>>d.jumlahobat;
+	
+	if(d.pilihannomorobat<16){
 		
-		d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
-		d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/strip"<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+		}
+	
+	}else if(d.pilihannomorobat>=16 && d.pilihannomorobat<18){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/15 ml"<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+		}
+		
+	}else if(d.pilihannomorobat==18){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/6 pcs "<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+		}
+		
+	}else if(d.pilihannomorobat>=19 && d.pilihannomorobat<21){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/12 pcs "<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+		}
+		
+	}else{
+		
+		cout<<"Maaf obat yang anda pilih tidak tersedia..."<<endl;
+		cout<<endl;
 	}
 }
 
@@ -162,6 +225,7 @@ int main(){
 		system("cls");
 		
 	}while(data.belilagi!='n');
+	
 	cout<<"Total Bayar : "<<data.total;
 	return 0;
 }
