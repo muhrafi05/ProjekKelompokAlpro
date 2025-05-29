@@ -216,6 +216,8 @@ void menuUtama(){
 	int pilih;
 	
 	do {
+		system("cls");
+		
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
 	    cout << "~|                SELAMAT DATANG DI               |~\n";
 	    cout << "~|                   APOTEK K-24                  |~\n";
@@ -255,15 +257,23 @@ void menuUtama(){
 	        break;
 	        case 2:
 	        	system("cls");
+	        	cout << "belum dibikin bang\n\n";
+	        	system("pause");
 	        break;
 	        case 3:
 	        	system("cls");
+	        	cout << "belum dibikin juga bang\n\n";
+	        	system("pause");
 	        break;
 	        case 4:
 	        	system("cls");
+	        	cout << "belum dibikin jg bang\n\n";
+	        	system("pause");
 	        break;
 	        case 5:
 	        	system("cls");
+	        	cout << "ini jg belum dibikin bang\n\n";
+	        	system("pause");
 	        break;
 	        case 6:
 	        	cout << "Trima kasih! Program selesaii.\n";
