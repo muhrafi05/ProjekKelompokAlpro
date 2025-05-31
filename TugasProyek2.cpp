@@ -15,6 +15,9 @@ struct dataapotik{
 	int total;
 	char belilagi;
 	int pilihmenu;
+	int pilihpengambilan;
+	int jarakkirim;
+	int biayaongkir;
 	
 };
 
@@ -83,7 +86,7 @@ void isidataobat(dataapotik &d){
 	d.namafungsi[1][6]="Paramex";
 	d.harga_stok[1][6]=20000;
 	d.harga_stok[2][6]=100;
-	d.namafungsi[2][6]="Mengatasi sakit kepla";
+	d.namafungsi[2][6]="Mengatasi sakit kepala";
 	d.namafungsi[1][7]="Amoxicillin 500 mg";
 	d.harga_stok[1][7]=30000;
 	d.harga_stok[2][7]=100;
@@ -167,7 +170,7 @@ void detailobat(dataapotik &d){
 			cin>>d.jumlahobat;
 		
 			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
-			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
 		}
 	
 	}else if(d.pilihannomorobat>=16 && d.pilihannomorobat<18){
@@ -185,7 +188,7 @@ void detailobat(dataapotik &d){
 			cin>>d.jumlahobat;
 		
 			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
-			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
 		}
 		
 	}else if(d.pilihannomorobat==18){
@@ -203,7 +206,7 @@ void detailobat(dataapotik &d){
 			cin>>d.jumlahobat;
 		
 			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
-			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
 		}
 		
 	}else if(d.pilihannomorobat>=19 && d.pilihannomorobat<21){
@@ -231,6 +234,42 @@ void detailobat(dataapotik &d){
 	}
 }
 
+void pengambilan(dataapotik &d){
+	cout<<"============================================================================"<<endl;
+	cout<<endl;
+	cout<<"Pilihan Pengambilan obat"<<endl;
+	cout<<"Note : Jarak pengiriman Obat Maksimal 15 Km dan dikenakan biaya Rp.3000/1Km."<<endl;
+	cout<<"1.Ambil tempat"<<endl;
+	cout<<"2.Kirim"<<endl;
+	cout<<endl;
+	cout<<"============================================================================"<<endl;
+	cout<<"Pilihan anda (1/2) : ";
+	cin>>d.pilihpengambilan;
+	
+}
+
+void ongkir(dataapotik &d){
+	
+	switch(d.pilihpengambilan){
+		case 1:
+			d.biayaongkir;
+			break;
+		case 2:
+			cout<<"Berapa Km Jarak Kirim dari apotik : ";
+			cin>>d.jarakkirim;
+			
+			if(d.jarakkirim>15){
+				cout<<"Maaf maksimal jarak kirim 15Km dari apotik..."<<endl;
+			}else{
+				d.biayaongkir=3000*d.jarakkirim;
+			}
+			break;
+		default:
+			cout<<"Pilihan tidak ada..."<<endl;
+	}
+	system("pause");
+	
+}
 void hasilpilihmenuutama(dataapotik &d){
 	dataapotik data;
 	
@@ -251,9 +290,10 @@ void hasilpilihmenuutama(dataapotik &d){
 					
 				}while(data.belilagi!='n');
 				
-				cout<<"Total Bayar : "<<data.total << endl;
+				pengambilan(data);
+				system("cls");
+				ongkir(data);
 				
-				system("pause");
 	        break;
 	        case 2:
 	        	system("cls");
@@ -282,8 +322,10 @@ void hasilpilihmenuutama(dataapotik &d){
 	            cout << "Pilihan tidak valid. coba lagi.\n";
 	    }
 }
+
 int main(){
 	dataapotik data;
+	
 	do{
 		
 		menuutama(data);
