@@ -12,7 +12,7 @@ struct dataapotik{
 	int harga_stok[100][100];
 	int pilihannomorobat;
 	int jumlahobat;
-	int total;
+	float total;
 	char belilagi;
 	int pilihmenu;
 	int pilihpengambilan;
@@ -224,7 +224,7 @@ void detailobat(dataapotik &d){
 			cin>>d.jumlahobat;
 		
 			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
-			d.harga_stok[2][i-1]-=d.harga_stok[2][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
 		}
 		
 	}else{
@@ -267,6 +267,20 @@ void ongkir(dataapotik &d){
 		default:
 			cout<<"Pilihan tidak ada..."<<endl;
 	}
+	
+}
+
+void detailpembelian(dataapotik &d){
+	cout<<"============= TAGIHAN ============="<<endl;
+	cout<<endl;
+	cout<<"1. Obat\t\t: "<<d.total<<endl;
+	
+	if(d.pilihpengambilan==2){
+		cout<<"2. Ongkir\t: "<<d.biayaongkir<<endl;
+	}
+	
+	cout<<endl;
+	cout<<"Total yang harus anda bayar : "<<d.total+d.biayaongkir<<endl;
 	system("pause");
 	
 }
@@ -293,6 +307,7 @@ void hasilpilihmenuutama(dataapotik &d){
 				pengambilan(data);
 				system("cls");
 				ongkir(data);
+				detailpembelian(data);
 				
 	        break;
 	        case 2:
