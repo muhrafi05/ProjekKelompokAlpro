@@ -18,6 +18,12 @@ struct dataapotik{
 	int pilihpengambilan;
 	int jarakkirim;
 	int biayaongkir;
+	string a;
+	string b;
+	string admin;
+	string passwordAdmin;
+	string user;
+	string passwordUser;
 	
 };
 
@@ -39,6 +45,26 @@ void menuutama(dataapotik &d){
 	    cout << "Masukkan pilihan (1-6): ";
 	    cin>>d.pilihmenu;
 	    cin.ignore();
+}
+
+string login(dataapotik &d){
+	d.admin = "admin";
+	d.passwordAdmin = "admin";
+	d.user = "user";
+	d.passwordUser = "user";
+	cout << "Masukan username: ";
+	cin >> d.a;
+	cout << "Masukan password: ";
+	cin >> d.b;
+	
+	
+	if(d.a == d.admin || d.b == d.passwordAdmin) {
+		menuutama(d);
+	} else if(d.a == d.user || d.b == d.passwordUser){
+		menuutama(d);
+	} else{
+		cout<<"Username dan password salah, silahkan coba lagi...."<<endl;
+	}
 }
 
 void isidatapasien(dataapotik &d){
@@ -341,6 +367,7 @@ void hasilpilihmenuutama(dataapotik &d){
 int main(){
 	dataapotik data;
 	
+	login(data);
 	do{
 		
 		menuutama(data);
