@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <fstream>
 using namespace std;
 
 struct dataapotik{
@@ -27,11 +28,30 @@ struct dataapotik{
 	
 };
 
-void menuutama(dataapotik &d){
+void menuutama_admin(dataapotik &d){
 		system("cls");
 		
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-	    cout << "~|                SELAMAT DATANG DI               |~\n";
+	    cout << "~|              SELAMAT DATANG ADMIN DI           |~\n";
+	    cout << "~|                   APOTEK K-24                  |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~| 1. Beli Obat                                   |~\n";
+	    cout << "~| 2. Stok Obat                                   |~\n";
+	    cout << "~| 3. Data Pembelian                              |~\n";
+	    cout << "~| 4. Data Pasien                                 |~\n";
+	    cout << "~| 5. Laporan Keuangan                            |~\n";
+	    cout << "~| 6. Keluar                                      |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	
+	    cout << "Masukkan pilihan (1-6): ";
+	    cin>>d.pilihmenu;
+	    cin.ignore();
+}
+void menuutama_pelanggan(dataapotik &d){
+		system("cls");
+		
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~|             SELAMAT DATANG PELANGGAN DI        |~\n";
 	    cout << "~|                   APOTEK K-24                  |~\n";
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
 	    cout << "~| 1. Beli Obat                                   |~\n";
@@ -47,24 +67,18 @@ void menuutama(dataapotik &d){
 	    cin.ignore();
 }
 
-string login(dataapotik &d){
+void login(dataapotik &d){
 	d.admin = "admin";
 	d.passwordAdmin = "admin";
 	d.user = "user";
 	d.passwordUser = "user";
-	cout << "Masukan username: ";
+	cout << "Masukan username (admin/user): ";
 	cin >> d.a;
-	cout << "Masukan password: ";
+	cout << "Masukan password (admin/user): ";
 	cin >> d.b;
 	
 	
-	if(d.a == d.admin || d.b == d.passwordAdmin) {
-		menuutama(d);
-	} else if(d.a == d.user || d.b == d.passwordUser){
-		menuutama(d);
-	} else{
-		cout<<"Username dan password salah, silahkan coba lagi...."<<endl;
-	}
+	
 }
 
 void isidatapasien(dataapotik &d){
@@ -310,35 +324,44 @@ void detailpembelian(dataapotik &d){
 	system("pause");
 	
 }
+
+void stokobat(dataapotik &d){
+	cout<<"==========STOK OBAT=========\n";
+	for(int i=0;i<20;i++){
+		cout<<"Nama obat : "<<d.namafungsi[1][i]<<"||  Stok : "<<d.harga_stok[2][i]<<endl;
+	}
+	cout<<"============================\n";
+} 
+
 void hasilpilihmenuutama(dataapotik &d){
-	dataapotik data;
+
 	
 	switch (d.pilihmenu) {
 	        case 1:
 	        	system("cls");
-	    		isidatapasien(data);
-	    		isidataobat(data);
+	    		isidatapasien(d);
+	    		isidataobat(d);
 	    		do{
-					menunamaobat(data);
+					menunamaobat(d);
 					cout<<"Masukkan nomor obat yang anda pilih : ";
-					cin>>data.pilihannomorobat;
+					cin>>d.pilihannomorobat;
 					system("cls");
-					detailobat(data);
+					detailobat(d);
 					cout<<"Apakah ada obat lain yang akan anda beli? (y/n) : ";
-					cin>>data.belilagi;
+					cin>>d.belilagi;
 					system("cls");
 					
-				}while(data.belilagi!='n');
+				}while(d.belilagi!='n');
 				
-				pengambilan(data);
+				pengambilan(d);
 				system("cls");
-				ongkir(data);
-				detailpembelian(data);
+				ongkir(d);
+				detailpembelian(d);
 				
 	        break;
 	        case 2:
 	        	system("cls");
-	        	cout << "belum dibikin bang\n\n";
+	        	stokobat(d);
 	        	system("pause");
 	        break;
 	        case 3:
@@ -368,10 +391,20 @@ int main(){
 	dataapotik data;
 	
 	login(data);
-	do{
-		
-		menuutama(data);
+	isidataobat(data);
+	if(data.a == data.admin || data.b == data.passwordAdmin) {
+			do{
+		menuutama_admin(data);
 		hasilpilihmenuutama(data);
 	}while(data.pilihmenu!=6);
+	} else if(data.a == data.user || data.b == data.passwordUser){
+			do{
+		menuutama_pelanggan(data);
+		hasilpilihmenuutama(data);
+	}while(data.pilihmenu!=6);
+	} else{
+		cout<<"Username dan password salah, silahkan coba lagi...."<<endl;
+	}
+
 	
 }
