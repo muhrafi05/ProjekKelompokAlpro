@@ -7,7 +7,7 @@ using namespace std;
 struct dataapotik{
 	string namapasien;
 	int umurpasien;
-	string jeniskelaminpasien;
+	char jeniskelaminpasien;
 	string riwayatpenyakitpasien;
 	string namafungsi[100][100];
 	int harga_stok[100][100];
@@ -15,7 +15,9 @@ struct dataapotik{
 	int jumlahobat;
 	float total;
 	char belilagi;
-	int pilihmenu;
+	int pilihmenuAdmin;
+	int pilihmenuUser;
+	int pilihmenuLogin;
 	int pilihpengambilan;
 	int jarakkirim;
 	int biayaongkir;
@@ -28,6 +30,23 @@ struct dataapotik{
 	
 };
 
+void menulogin(dataapotik &d){
+system("cls");
+		
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~|           SELAMAT DATANG DI MENU LOGIN         |~\n";
+	    cout << "~|                   APOTEK K-24                  |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	    cout << "~| 1. Admin                                       |~\n";
+	    cout << "~| 2. Pelanggan                                   |~\n";
+	    cout << "~| 3. Keluar                                      |~\n";
+	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+	
+	    cout << "Masukkan pilihan (1-3): ";
+	    cin>>d.pilihmenuLogin;
+	    cin.ignore();	
+}
+
 void menuutama_admin(dataapotik &d){
 		system("cls");
 		
@@ -35,16 +54,15 @@ void menuutama_admin(dataapotik &d){
 	    cout << "~|              SELAMAT DATANG ADMIN DI           |~\n";
 	    cout << "~|                   APOTEK K-24                  |~\n";
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-	    cout << "~| 1. Beli Obat                                   |~\n";
-	    cout << "~| 2. Stok Obat                                   |~\n";
-	    cout << "~| 3. Data Pembelian                              |~\n";
-	    cout << "~| 4. Data Pasien                                 |~\n";
-	    cout << "~| 5. Laporan Keuangan                            |~\n";
-	    cout << "~| 6. Keluar                                      |~\n";
+	    cout << "~| 1. Stok Obat                                   |~\n";
+	    cout << "~| 2. Data Pembelian                              |~\n";
+	    cout << "~| 3. Data Pasien                                 |~\n";
+	    cout << "~| 4. Laporan Keuangan                            |~\n";
+	    cout << "~| 5. Keluar                                      |~\n";
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
 	
-	    cout << "Masukkan pilihan (1-6): ";
-	    cin>>d.pilihmenu;
+	    cout << "Masukkan pilihan (1-5): ";
+	    cin>>d.pilihmenuAdmin;
 	    cin.ignore();
 }
 void menuutama_pelanggan(dataapotik &d){
@@ -56,18 +74,18 @@ void menuutama_pelanggan(dataapotik &d){
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
 	    cout << "~| 1. Beli Obat                                   |~\n";
 	    cout << "~| 2. Stok Obat                                   |~\n";
-	    cout << "~| 3. Data Pembelian                              |~\n";
-	    cout << "~| 4. Data Pasien                                 |~\n";
-	    cout << "~| 5. Laporan Keuangan                            |~\n";
-	    cout << "~| 6. Keluar                                      |~\n";
+	    cout << "~| 3. Pilih opsi pembayaran                       |~\n";
+	    cout << "~| 4. Cetak struk                                 |~\n";
+	    cout << "~| 5. Keluar                                      |~\n";
 	    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
 	
-	    cout << "Masukkan pilihan (1-6): ";
-	    cin>>d.pilihmenu;
+	    cout << "Masukkan pilihan (1-5): ";
+	    cin>>d.pilihmenuUser;
 	    cin.ignore();
 }
 
 void login(dataapotik &d){
+	system("cls");
 	d.admin = "admin";
 	d.passwordAdmin = "admin";
 	d.user = "user";
@@ -333,14 +351,13 @@ void stokobat(dataapotik &d){
 	cout<<"============================\n";
 } 
 
-void hasilpilihmenuutama(dataapotik &d){
+void hasilpilihmenuutamaUser(dataapotik &d){
 
 	
-	switch (d.pilihmenu) {
+	switch (d.pilihmenuUser) {
 	        case 1:
 	        	system("cls");
 	    		isidatapasien(d);
-	    		isidataobat(d);
 	    		do{
 					menunamaobat(d);
 					cout<<"Masukkan nomor obat yang anda pilih : ";
@@ -375,36 +392,87 @@ void hasilpilihmenuutama(dataapotik &d){
 	        	system("pause");
 	        break;
 	        case 5:
-	        	system("cls");
-	        	cout << "ini jg belum dibikin bang\n\n";
-	        	system("pause");
-	        break;
-	        case 6:
-	        	cout << "Trima kasih! Program selesaii.\n";
+				cout << "Trima kasih! Program selesaii.\n";
 	        break;
 	        default:
 	            cout << "Pilihan tidak valid. coba lagi.\n";
 	    }
 }
 
+void datapasien(dataapotik &d){
+	cout<<"=============DATA PASIEN=============\n";
+	cout<<"Nama\t\t\t: "<<d.namapasien<<endl;
+	cout<<"Umur\t\t\t: "<<d.umurpasien<<endl;
+	if(d.jeniskelaminpasien == 'l' ||d.jeniskelaminpasien== 'L' ){
+	cout<<"Jenis kelamin: Laki-laki\n";
+	}else{
+	cout<<"Jenis kelamin\t\t: Perempuan\n";
+	}
+	cout<<"Riwayat penyakit\t: "<<d.riwayatpenyakitpasien<<endl;
+
+}
+
+void hasilpilihmenuutamaAdmin(dataapotik &d){
+
+	
+	switch (d.pilihmenuAdmin) {
+	        case 1:
+	        	system("cls");
+	        	stokobat(d);
+	        	system("pause");	
+	        break;
+	        case 2:
+	        	system("cls");
+	        	cout<<"belum dibikin bang\n";
+	        	system("pause");
+	        break;
+	        case 3:
+	        	system("cls");
+	        	datapasien(d);
+	        	system("pause");
+	        break;
+	        case 4:
+	        	system("cls");
+	        	cout << "belum dibikin jg bang\n\n";
+	        	system("pause");
+	        break;
+	        case 5:
+				cout << "Trima kasih! Program selesaii.\n";
+	        break;
+	        default:
+	            cout << "Pilihan tidak valid. coba lagi.\n";
+	    }
+}
+
+void hasillogin(dataapotik &d){
+	do{
+	menulogin(d);
+	if(d.pilihmenuLogin==1){
+		login(d);
+		do{
+		menuutama_admin(d);
+		hasilpilihmenuutamaAdmin(d);
+	}while(d.pilihmenuAdmin!=5);
+	}
+	
+else if(d.pilihmenuLogin==2){
+		login(d);
+		do{
+		menuutama_pelanggan(d);
+		hasilpilihmenuutamaUser(d);
+	}while(d.pilihmenuUser!=5);
+}
+}while(d.pilihmenuLogin!=3);
+}
+
+
 int main(){
 	dataapotik data;
 	
-	login(data);
-	isidataobat(data);
-	if(data.a == data.admin || data.b == data.passwordAdmin) {
-			do{
-		menuutama_admin(data);
-		hasilpilihmenuutama(data);
-	}while(data.pilihmenu!=6);
-	} else if(data.a == data.user || data.b == data.passwordUser){
-			do{
-		menuutama_pelanggan(data);
-		hasilpilihmenuutama(data);
-	}while(data.pilihmenu!=6);
-	} else{
-		cout<<"Username dan password salah, silahkan coba lagi...."<<endl;
-	}
-
 	
+	isidataobat(data);
+	hasillogin(data);
+
+
+	return 0;
 }
