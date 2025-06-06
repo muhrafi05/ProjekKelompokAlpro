@@ -27,6 +27,8 @@ struct dataapotik{
 	string passwordAdmin;
 	string user;
 	string passwordUser;
+	int metodebayarpilih;
+	string metodebayar;
 	
 };
 
@@ -349,7 +351,27 @@ void stokobat(dataapotik &d){
 		cout<<"Nama obat : "<<d.namafungsi[1][i]<<"||  Stok : "<<d.harga_stok[2][i]<<endl;
 	}
 	cout<<"============================\n";
-} 
+}
+
+void metodebayar(dataapotik &d){
+	cout<<"Pilih metode bayar : "<<endl;
+	cout<<"1. Transfer Bank"<<endl;
+	cout<<"2. Qris"<<endl;
+	cout<<"3. Cash"<<endl;
+	cout<<"Masukkan Pilihan : "<<endl;
+	cin>>d.metodebayarpilih;
+	if(d.metodebayarpilih==1){
+		d.metodebayar="Transfer Bank";
+	}else if(d.metodebayarpilih==2){
+		d.metodebayar="Qris";
+	}else if(d.metodebayarpilih==3){
+		d.metodebayar="Cash";
+	}else{
+		cout<<"Pilihan tidak ada....";
+	}
+	
+	
+}
 
 void hasilpilihmenuutamaUser(dataapotik &d){
 
@@ -383,7 +405,7 @@ void hasilpilihmenuutamaUser(dataapotik &d){
 	        break;
 	        case 3:
 	        	system("cls");
-	        	cout << "belum dibikin juga bang\n\n";
+	        	metodebayar(d);
 	        	system("pause");
 	        break;
 	        case 4:
