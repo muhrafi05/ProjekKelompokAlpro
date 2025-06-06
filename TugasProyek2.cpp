@@ -13,7 +13,7 @@ struct dataapotik{
 	int harga_stok[100][100];
 	int pilihannomorobat;
 	int jumlahobat;
-	float total;
+	int total;
 	char belilagi;
 	int pilihmenuAdmin;
 	int pilihmenuUser;
@@ -67,6 +67,7 @@ void menuutama_admin(dataapotik &d){
 	    cin>>d.pilihmenuAdmin;
 	    cin.ignore();
 }
+
 void menuutama_pelanggan(dataapotik &d){
 		system("cls");
 		
@@ -87,6 +88,7 @@ void menuutama_pelanggan(dataapotik &d){
 }
 
 void login(dataapotik &d){
+	
 	system("cls");
 	d.admin = "admin";
 	d.passwordAdmin = "admin";
@@ -95,13 +97,12 @@ void login(dataapotik &d){
 	cout << "Masukan username (admin/user): ";
 	cin >> d.a;
 	cout << "Masukan password (admin/user): ";
-	cin >> d.b;
-	
-	
+	cin >> d.b;	
 	
 }
 
 void isidatapasien(dataapotik &d){
+	
 	cout<<"Selamat Datang Di Apotik K-24"<<endl;
 	cout<<"Silahkan mengisi data diri anda sebelum membeli obat."<<endl;
 	cout<<"Nama\t\t\t: ";
@@ -215,6 +216,8 @@ void menunamaobat(dataapotik &d){
 
 void detailobat(dataapotik &d){
 	
+	d.jumlahobat = 0;
+	
 	if(d.pilihannomorobat<16){
 		
 		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
@@ -312,7 +315,7 @@ void ongkir(dataapotik &d){
 	
 	switch(d.pilihpengambilan){
 		case 1:
-			d.biayaongkir;
+			d.biayaongkir = 0;
 			break;
 		case 2:
 			cout<<"Berapa Km Jarak Kirim dari apotik : ";
@@ -345,6 +348,43 @@ void detailpembelian(dataapotik &d){
 	
 }
 
+void simpanDataPembelian(dataapotik &d) {
+    ofstream file("data_pembelian.txt", ios::app);
+
+    if (file.is_open()) {
+        file << "====================================\n";
+        file << "Nama Pasien     : " << d.namapasien << endl;
+        file << "Umur            : " << d.umurpasien << endl;
+        file << "Jenis Kelamin   : " << d.jeniskelaminpasien << endl;
+        file << "Riwayat Penyakit: " << d.riwayatpenyakitpasien << endl;
+        file << "Total Obat      : " << d.total << endl;
+        if (d.pilihpengambilan == 2) {
+            file << "Biaya Ongkir    : " << d.biayaongkir << endl;
+        }
+        file << "Total Bayar     : " << d.total + d.biayaongkir << endl;
+        file << "Metode Bayar    : " << d.metodebayar << endl;
+        file << "====================================\n\n";
+        file.close();
+    } else {
+        cout << "Gagal menyimpan data ke file!" << endl;
+    }
+}
+
+void tampilkanDataPembelianDariFile() {
+    ifstream file("data_pembelian.txt");
+
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    } else {
+        cout << "File tidak ditemukan atau gagal dibuka!" << endl;
+    }
+}
+
+
 void stokobat(dataapotik &d){
 	cout<<"==========STOK OBAT=========\n";
 	for(int i=0;i<20;i++){
@@ -373,52 +413,54 @@ void metodebayar(dataapotik &d){
 	
 }
 
-void hasilpilihmenuutamaUser(dataapotik &d){
+void hasilpilihmenuutamaUser(dataapotik &d) {
+    switch (d.pilihmenuUser) {
+        case 1:
+            system("cls");
+            isidatapasien(d);
+            do {
+                menunamaobat(d);
+                cout << "Masukkan nomor obat yang anda pilih : ";
+                cin >> d.pilihannomorobat;
+                system("cls");
+                detailobat(d);
+                cout << "Apakah ada obat lain yang akan anda beli? (y/n) : ";
+                cin >> d.belilagi;
+                system("cls");
+            } while (d.belilagi != 'n');
 
-	
-	switch (d.pilihmenuUser) {
-	        case 1:
-	        	system("cls");
-	    		isidatapasien(d);
-	    		do{
-					menunamaobat(d);
-					cout<<"Masukkan nomor obat yang anda pilih : ";
-					cin>>d.pilihannomorobat;
-					system("cls");
-					detailobat(d);
-					cout<<"Apakah ada obat lain yang akan anda beli? (y/n) : ";
-					cin>>d.belilagi;
-					system("cls");
-					
-				}while(d.belilagi!='n');
-				
-				pengambilan(d);
-				system("cls");
-				ongkir(d);
-				detailpembelian(d);
-				
-	        break;
-	        case 2:
-	        	system("cls");
-	        	stokobat(d);
-	        	system("pause");
-	        break;
-	        case 3:
-	        	system("cls");
-	        	metodebayar(d);
-	        	system("pause");
-	        break;
-	        case 4:
-	        	system("cls");
-	        	cout << "belum dibikin jg bang\n\n";
-	        	system("pause");
-	        break;
-	        case 5:
-				cout << "Trima kasih! Program selesaii.\n";
-	        break;
-	        default:
-	            cout << "Pilihan tidak valid. coba lagi.\n";
-	    }
+            pengambilan(d);
+            system("cls");
+            ongkir(d);
+            detailpembelian(d);
+            break;
+
+        case 2:
+            system("cls");
+            stokobat(d);
+            system("pause");
+            break;
+            
+        case 3:            
+            system("cls");
+            metodebayar(d);
+            simpanDataPembelian(d);
+            system("pause");
+            break;
+
+        case 4:
+            system("cls");
+            cout << "belum dibikin jg bang\n\n";
+            system("pause");
+            break;
+
+        case 5:
+            cout << "Trima kasih! Program selesaii.\n";
+            break;
+
+        default:
+            cout << "Pilihan tidak valid. coba lagi.\n";
+    }
 }
 
 void datapasien(dataapotik &d){
@@ -443,11 +485,13 @@ void hasilpilihmenuutamaAdmin(dataapotik &d){
 	        	stokobat(d);
 	        	system("pause");	
 	        break;
-	        case 2:
-	        	system("cls");
-	        	cout<<"belum dibikin bang\n";
-	        	system("pause");
-	        break;
+			case 2:
+			    system("cls");
+			    cout << "== DATA PEMBELIAN OBAT ==" << endl;
+			    tampilkanDataPembelianDariFile();
+			    system("pause");
+			    system("cls");
+			    break;
 	        case 3:
 	        	system("cls");
 	        	datapasien(d);
@@ -489,8 +533,8 @@ else if(d.pilihmenuLogin==2){
 
 
 int main(){
-	dataapotik data;
 	
+	dataapotik data;
 	
 	isidataobat(data);
 	hasillogin(data);
