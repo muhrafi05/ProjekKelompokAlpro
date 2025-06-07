@@ -13,8 +13,13 @@ struct dataapotik{
 	int harga_stok[100][100];
 	int pilihannomorobat;
 	int jumlahobat;
-	int total;
+	int total=0;
 	int indeks;
+	int batas=0;
+	int x=0;
+	int y=0;
+	int simpan[100];
+	int temp[100];
 	char belilagi;
 	int pilihmenuAdmin;
 	int pilihmenuUser;
@@ -453,13 +458,12 @@ void cetakStruk(dataapotik &d){
     if (file.is_open()) {
         file << "===============STRUK ANDA================\n";
         file << "Nama Pasien      : " << d.namapasien << endl;
-		for(int i=0;i<1;i++){
-		file <<"Obat 		 : " <<d.namafungsi[1][d.pilihannomorobat-1]<<endl;
+		for(int i=0;i<d.batas;i++){
+		file <<"Obat 		 : " <<d.namafungsi[1][d.simpan[i]-1]<<" = " <<d.temp[i]<<" x "<<d.harga_stok[1][d.simpan[i]-1]<< endl;
 		}
-        file << "Jumlah obat	 : " <<d.jumlahobat<<" x "<<d.harga_stok[1][d.pilihannomorobat-1]<< endl;
         file << "Metode bayar	 : " <<d.metodebayar<<endl;
-        file << "====================================\n";
-        file << "TOTAL 			 : " <<d.total+d.biayaongkir<<endl;
+        file << "==========================================\n";
+        file << "TOTAL 			 : Rp." <<d.total+d.biayaongkir<<endl;
         file.close();
     } else {
         cout << "Gagal menyimpan data ke file!" << endl;
@@ -489,18 +493,23 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
                 menunamaobat(d);
                 cout << "Masukkan nomor obat yang anda pilih : ";
                 cin >> d.pilihannomorobat;
+                d.simpan[d.x]=d.pilihannomorobat;
                 system("cls");
                 detailobat(d);
+                d.temp[d.y]=d.jumlahobat;
+                d.batas++;
                 cout << "Apakah ada obat lain yang akan anda beli? (y/n) : ";
                 cin >> d.belilagi;
+                d.x++;
+                d.y++;
                 system("cls");
             } while (d.belilagi != 'n');
-
             pengambilan(d);
             system("cls");
             ongkir(d);
             detailpembelian(d);
             datapasien(d);
+            
             break;
 
         case 2:
