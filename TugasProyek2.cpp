@@ -448,11 +448,11 @@ void datapasien(dataapotik &d){
 }
 
 void cetakStruk(dataapotik &d){
-	 ofstream file("struk.txt", ios::app);
+	 ofstream file("struk.txt", ios::out);
 
     if (file.is_open()) {
         file << "===============STRUK ANDA================\n";
-        file << "Nama Pasien     : " << d.namapasien << endl;
+        file << "Nama Pasien      : " << d.namapasien << endl;
 		for(int i=0;i<1;i++){
 		file <<"Obat 		 : " <<d.namafungsi[1][d.pilihannomorobat-1]<<endl;
 		}
