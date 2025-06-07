@@ -484,6 +484,14 @@ void tampilStruk(dataapotik &d){
     }
 }
 
+void tempStruk (dataapotik &d){
+		
+				d.temp[d.y]=d.jumlahobat;
+                d.batas++;
+                d.x++;
+                d.y++;
+            
+}
 void hasilpilihmenuutamaUser(dataapotik &d) {
     switch (d.pilihmenuUser) {
         case 1:
@@ -496,12 +504,9 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
                 d.simpan[d.x]=d.pilihannomorobat;
                 system("cls");
                 detailobat(d);
-                d.temp[d.y]=d.jumlahobat;
-                d.batas++;
+                tempStruk(d);
                 cout << "Apakah ada obat lain yang akan anda beli? (y/n) : ";
                 cin >> d.belilagi;
-                d.x++;
-                d.y++;
                 system("cls");
             } while (d.belilagi != 'n');
             pengambilan(d);
