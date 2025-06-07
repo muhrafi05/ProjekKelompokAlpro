@@ -14,6 +14,7 @@ struct dataapotik{
 	int pilihannomorobat;
 	int jumlahobat;
 	int total;
+	int indeks;
 	char belilagi;
 	int pilihmenuAdmin;
 	int pilihmenuUser;
@@ -87,16 +88,32 @@ void menuutama_pelanggan(dataapotik &d){
 	    cin.ignore();
 }
 
-void login(dataapotik &d){
+void loginAdmin(dataapotik &d){
 	
 	system("cls");
+	cout<<"== ANDA LOGIN SEBAGAI ADMIN ==\n";
 	d.admin = "admin";
 	d.passwordAdmin = "admin";
 	d.user = "user";
 	d.passwordUser = "user";
-	cout << "Masukan username (admin/user): ";
+	cout << "Masukan username (admin): ";
 	cin >> d.a;
-	cout << "Masukan password (admin/user): ";
+	cout << "Masukan password (admin): ";
+	cin >> d.b;	
+	
+}
+
+void loginUser(dataapotik &d){
+	
+	system("cls");
+	cout<<"== ANDA LOGIN SEBAGAI PELANGGAN ==\n";
+	d.admin = "admin";
+	d.passwordAdmin = "admin";
+	d.user = "user";
+	d.passwordUser = "user";
+	cout << "Masukan username (user): ";
+	cin >> d.a;
+	cout << "Masukan password (user): ";
 	cin >> d.b;	
 	
 }
@@ -413,6 +430,56 @@ void metodebayar(dataapotik &d){
 	
 }
 
+void datapasien(dataapotik &d){
+	 ofstream file("data_pasien.txt", ios::app);
+
+    if (file.is_open()) {
+        file << "====================================\n";
+        file << "Nama Pasien     : " << d.namapasien << endl;
+        file << "Umur            : " << d.umurpasien << endl;
+        file << "Jenis Kelamin   : " << d.jeniskelaminpasien << endl;
+        file << "Riwayat Penyakit: " << d.riwayatpenyakitpasien << endl;
+        file << "====================================\n\n";
+        file.close();
+    } else {
+        cout << "Gagal menyimpan data ke file!" << endl;
+    }
+
+}
+
+void cetakStruk(dataapotik &d){
+	 ofstream file("struk.txt", ios::app);
+
+    if (file.is_open()) {
+        file << "===============STRUK ANDA================\n";
+        file << "Nama Pasien     : " << d.namapasien << endl;
+		for(int i=0;i<1;i++){
+		file <<"Obat 		 : " <<d.namafungsi[1][d.pilihannomorobat-1]<<endl;
+		}
+        file << "Jumlah obat	 : " <<d.jumlahobat<<" x "<<d.harga_stok[1][d.pilihannomorobat-1]<< endl;
+        file << "Metode bayar	 : " <<d.metodebayar<<endl;
+        file << "====================================\n";
+        file << "TOTAL 			 : " <<d.total+d.biayaongkir<<endl;
+        file.close();
+    } else {
+        cout << "Gagal menyimpan data ke file!" << endl;
+    }
+}
+
+void tampilStruk(dataapotik &d){
+	ifstream file("struk.txt");
+
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    } else {
+        cout << "File tidak ditemukan atau gagal dibuka!" << endl;
+    }
+}
+
 void hasilpilihmenuutamaUser(dataapotik &d) {
     switch (d.pilihmenuUser) {
         case 1:
@@ -433,6 +500,7 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
             system("cls");
             ongkir(d);
             detailpembelian(d);
+            datapasien(d);
             break;
 
         case 2:
@@ -445,12 +513,13 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
             system("cls");
             metodebayar(d);
             simpanDataPembelian(d);
+            cetakStruk(d);
             system("pause");
             break;
 
         case 4:
             system("cls");
-            cout << "belum dibikin jg bang\n\n";
+            tampilStruk(d);
             system("pause");
             break;
 
@@ -463,17 +532,18 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
     }
 }
 
-void datapasien(dataapotik &d){
-	cout<<"=============DATA PASIEN=============\n";
-	cout<<"Nama\t\t\t: "<<d.namapasien<<endl;
-	cout<<"Umur\t\t\t: "<<d.umurpasien<<endl;
-	if(d.jeniskelaminpasien == 'l' ||d.jeniskelaminpasien== 'L' ){
-	cout<<"Jenis kelamin: Laki-laki\n";
-	}else{
-	cout<<"Jenis kelamin\t\t: Perempuan\n";
-	}
-	cout<<"Riwayat penyakit\t: "<<d.riwayatpenyakitpasien<<endl;
+void tampilDataPasien(dataapotik &d){
+	ifstream file("data_pasien.txt");
 
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    } else {
+        cout << "File tidak ditemukan atau gagal dibuka!" << endl;
+    }
 }
 
 void hasilpilihmenuutamaAdmin(dataapotik &d){
@@ -494,7 +564,8 @@ void hasilpilihmenuutamaAdmin(dataapotik &d){
 			    break;
 	        case 3:
 	        	system("cls");
-	        	datapasien(d);
+	        	cout<<"== DATA PASIEN ==\n";
+	        	tampilDataPasien(d);
 	        	system("pause");
 	        break;
 	        case 4:
@@ -514,7 +585,7 @@ void hasillogin(dataapotik &d){
 	do{
 	menulogin(d);
 	if(d.pilihmenuLogin==1){
-		login(d);
+		loginAdmin(d);
 		do{
 		menuutama_admin(d);
 		hasilpilihmenuutamaAdmin(d);
@@ -522,14 +593,19 @@ void hasillogin(dataapotik &d){
 	}
 	
 else if(d.pilihmenuLogin==2){
-		login(d);
+		loginUser(d);
 		do{
 		menuutama_pelanggan(d);
 		hasilpilihmenuutamaUser(d);
 	}while(d.pilihmenuUser!=5);
+}else if(d.pilihmenuLogin>3){
+	cout<<"Pilihan anda tidak valid silahkan input ulang\n\n";
+	system("pause");
 }
 }while(d.pilihmenuLogin!=3);
+cout<<"Terimakasih telah menggunakan program\n";
 }
+
 
 
 int main(){
