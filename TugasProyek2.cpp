@@ -54,37 +54,9 @@ void saveStokToFile(dataapotik &d) {
 }
 
 
-void loadStokFromFile(dataapotik &d) {
-    ifstream file("stok_obat.txt");
-    if (file.is_open()) {
-        string line;
-        int i = 0;
-        while (getline(file, line) && i < 20) {
-            stringstream ss(line);
-            string part;
-            
-            
-            getline(ss, part, ';');
-            d.namafungsi[1][i] = part;
-            
-           
-            getline(ss, part, ';');
-            d.harga_stok[1][i] = stoi(part);
-            
-           
-            getline(ss, part, ';');
-            d.harga_stok[2][i] = stoi(part);
-            
-            
-            getline(ss, part);
-            d.namafungsi[2][i] = part;
-            
-            i++;
-        }
-        file.close();
-        
-    } else {
-        
+void isidataobat(dataapotik &d) { 
+
+    
         d.namafungsi[1][0]  = "Paracetamol 500 mg";
         d.harga_stok[1][0]  = 12000;
         d.harga_stok[2][0]  = 100;
@@ -165,6 +137,42 @@ void loadStokFromFile(dataapotik &d) {
         d.harga_stok[1][19] = 6000;
         d.harga_stok[2][19] = 100;
         d.namafungsi[2][19] = "Kompres penurun panas untuk bayi";
+    
+}
+
+
+void loadStokFromFile(dataapotik &d) {
+    ifstream file("stok_obat.txt");
+    if (file.is_open()) {
+        string line;
+        int i = 0;
+        while (getline(file, line) && i < 20) {
+            stringstream ss(line);
+            string part;
+            
+            
+            getline(ss, part, ';');
+            d.namafungsi[1][i] = part;
+            
+           
+            getline(ss, part, ';');
+            d.harga_stok[1][i] = stoi(part);
+            
+           
+            getline(ss, part, ';');
+            d.harga_stok[2][i] = stoi(part);
+            
+            
+            getline(ss, part);
+            d.namafungsi[2][i] = part;
+            
+            i++;
+        }
+        file.close();
+        
+    } else {
+        
+        isidataobat(d)
         
         saveStokToFile(d); 
     }
