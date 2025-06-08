@@ -301,7 +301,7 @@ void detailobat(dataapotik &d){
         } else {
             d.total += d.harga_stok[1][i] * d.jumlahobat;
             d.harga_stok[2][i] -= d.jumlahobat;
-            saveStokToFile(d); // Simpan perubahan stok ke file
+            saveStokToFile(d); 
         }
     } else {
         cout << "Maaf obat yang anda pilih tidak tersedia..." << endl;
@@ -334,7 +334,7 @@ void ongkir(dataapotik &d){
             
             if(d.jarakkirim > 15){
                 cout << "Maaf maksimal jarak kirim 15Km dari apotik..." << endl;
-                d.pilihpengambilan = 0; // Reset pilihan
+                d.pilihpengambilan = 0; 
             } else {
                 d.biayaongkir = 3000 * d.jarakkirim;
             }
