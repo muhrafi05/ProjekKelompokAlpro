@@ -408,11 +408,19 @@ void tampilkanDataPembelianDariFile() {
 
 
 void stokobat(dataapotik &d){
-	cout<<"==========STOK OBAT=========\n";
+	 ofstream file("stok.txt", ios::out);
+
+    if (file.is_open()) {
+        file<<"==========STOK OBAT=========\n";
 	for(int i=0;i<20;i++){
-		cout<<"Nama obat : "<<d.namafungsi[1][i]<<"||  Stok : "<<d.harga_stok[2][i]<<endl;
+		file<<"Nama obat : "<<d.namafungsi[1][i]<<"||  Stok : "<<d.harga_stok[2][i]<<endl;
 	}
-	cout<<"============================\n";
+		file<<"============================\n";
+        file.close();
+    } else {
+        cout << "Gagal menyimpan data ke file!" << endl;
+    }
+	
 }
 
 void metodebayar(dataapotik &d){
@@ -470,6 +478,20 @@ void cetakStruk(dataapotik &d){
     }
 }
 
+void tampilStok (dataapotik &d){
+		ifstream file("stok.txt");
+
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    } else {
+        cout << "File tidak ditemukan atau gagal dibuka!" << endl;
+    }
+}
+
 void tampilStruk(dataapotik &d){
 	ifstream file("struk.txt");
 
@@ -497,6 +519,7 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
         case 1:
             system("cls");
             isidatapasien(d);
+            isidataobat(d);
             do {
                 menunamaobat(d);
                 cout << "Masukkan nomor obat yang anda pilih : ";
@@ -505,6 +528,7 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
                 system("cls");
                 detailobat(d);
                 tempStruk(d);
+                stokobat(d);
                 cout << "Apakah ada obat lain yang akan anda beli? (y/n) : ";
                 cin >> d.belilagi;
                 system("cls");
@@ -519,7 +543,7 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
 
         case 2:
             system("cls");
-            stokobat(d);
+            tampilStok(d);
             system("pause");
             break;
             
@@ -566,7 +590,7 @@ void hasilpilihmenuutamaAdmin(dataapotik &d){
 	switch (d.pilihmenuAdmin) {
 	        case 1:
 	        	system("cls");
-	        	stokobat(d);
+	        	tampilStok(d);
 	        	system("pause");	
 	        break;
 			case 2:
@@ -626,7 +650,7 @@ int main(){
 	
 	dataapotik data;
 	
-	isidataobat(data);
+	
 	hasillogin(data);
 
 
