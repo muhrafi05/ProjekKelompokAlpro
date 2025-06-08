@@ -6,6 +6,7 @@
 using namespace std;
 
 struct dataapotik{
+	
     string namapasien;
     int umurpasien;
     char jeniskelaminpasien;
@@ -35,19 +36,26 @@ struct dataapotik{
     string passwordUser;
     int metodebayarpilih;
     string metodebayar;
+    
 };
 
 
 void saveStokToFile(dataapotik &d) {
+	
     ofstream file("stok_obat.txt");
+    
     if (file.is_open()) {
+    	
         for (int i = 0; i < 20; i++) {
+        	
             file << d.namafungsi[1][i] << ";" 
                  << d.harga_stok[1][i] << ";" 
                  << d.harga_stok[2][i] << ";" 
                  << d.namafungsi[2][i] << "\n";
         }
+        
         file.close();
+        
     } else {
         cout << "Gagal menyimpan stok obat!" << endl;
     }
@@ -56,7 +64,6 @@ void saveStokToFile(dataapotik &d) {
 
 void isidataobat(dataapotik &d) { 
 
-    
         d.namafungsi[1][0]  = "Paracetamol 500 mg";
         d.harga_stok[1][0]  = 12000;
         d.harga_stok[2][0]  = 100;
@@ -142,25 +149,32 @@ void isidataobat(dataapotik &d) {
 
 
 void loadStokFromFile(dataapotik &d) {
+	
     ifstream file("stok_obat.txt");
+    
     if (file.is_open()) {
+    	
         string line;
         int i = 0;
+        
         while (getline(file, line) && i < 20) {
             stringstream ss(line);
             string part;
+            int harga, stok;
             
-            
+           
             getline(ss, part, ';');
             d.namafungsi[1][i] = part;
             
-           
-            getline(ss, part, ';');
-            d.harga_stok[1][i] = stoi(part);
             
-           
             getline(ss, part, ';');
-            d.harga_stok[2][i] = stoi(part);
+            stringstream(part) >> harga; 
+            d.harga_stok[1][i] = harga;
+            
+          
+            getline(ss, part, ';');
+            stringstream(part) >> stok; 
+            d.harga_stok[2][i] = stok;
             
             
             getline(ss, part);
@@ -168,71 +182,78 @@ void loadStokFromFile(dataapotik &d) {
             
             i++;
         }
+        
         file.close();
         
     } else {
-        
+    	
         isidataobat(d);
         
-        saveStokToFile(d); 
+        saveStokToFile(d);
     }
-    
 }
 
 
 void menulogin(dataapotik &d){
+	
     system("cls");
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-    cout << "~|           SELAMAT DATANG DI MENU LOGIN         |~\n";
-    cout << "~|                   APOTEK K-24                  |~\n";
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-    cout << "~| 1. Admin                                       |~\n";
-    cout << "~| 2. Pelanggan                                   |~\n";
-    cout << "~| 3. Keluar                                      |~\n";
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
+    cout << "|           SELAMAT DATANG DI MENU LOGIN         |\n";
+    cout << "|                   APOTEK K-24                  |\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
+    cout << "| 1. Admin                                       |\n";
+    cout << "| 2. Pelanggan                                   |\n";
+    cout << "| 3. Keluar                                      |\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
     cout << "Masukkan pilihan (1-3): ";
     cin >> d.pilihmenuLogin;
-    cin.ignore();   
+    cin.ignore();  
+	 
 }
 
 
 void menuutama_admin(dataapotik &d){
+	
     system("cls");
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-    cout << "~|              SELAMAT DATANG ADMIN DI           |~\n";
-    cout << "~|                   APOTEK K-24                  |~\n";
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-    cout << "~| 1. Stok Obat                                   |~\n";
-    cout << "~| 2. Data Pembelian                              |~\n";
-    cout << "~| 3. Data Pasien                                 |~\n";
-    cout << "~| 4. Laporan Keuangan                            |~\n";
-    cout << "~| 5. Keluar                                      |~\n";
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
+    cout << "|              SELAMAT DATANG ADMIN DI           |\n";
+    cout << "|                   APOTEK K-24                  |\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
+    cout << "| 1. Stok Obat                                   |\n";
+    cout << "| 2. Data Pembelian                              |\n";
+    cout << "| 3. Data Pasien                                 |\n";
+    cout << "| 4. Laporan Keuangan                            |\n";
+    cout << "| 5. Keluar                                      |\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
     cout << "Masukkan pilihan (1-5): ";
     cin >> d.pilihmenuAdmin;
     cin.ignore();
+    
 }
 
 
 void menuutama_pelanggan(dataapotik &d){
+	
     system("cls");
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-    cout << "~|             SELAMAT DATANG PELANGGAN DI        |~\n";
-    cout << "~|                   APOTEK K-24                  |~\n";
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
-    cout << "~| 1. Beli Obat                                   |~\n";
-    cout << "~| 2. Stok Obat                                   |~\n";
-    cout << "~| 3. Pilih opsi pembayaran                       |~\n";
-    cout << "~| 4. Cetak struk                                 |~\n";
-    cout << "~| 5. Keluar                                      |~\n";
-    cout << "~|"<< setw(51) << setfill('=') << "|~\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
+    cout << "|             SELAMAT DATANG PELANGGAN DI        |\n";
+    cout << "|                   APOTEK K-24                  |\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
+    cout << "| 1. Beli Obat                                   |\n";
+    cout << "| 2. Stok Obat                                   |\n";
+    cout << "| 3. Pilih opsi pembayaran                       |\n";
+    cout << "| 4. Cetak struk                                 |\n";
+    cout << "| 5. Keluar                                      |\n";
+    cout << "|"<< setw(51) << setfill('=') << "|\n";
     cout << "Masukkan pilihan (1-5): ";
     cin >> d.pilihmenuUser;
     cin.ignore();
+    
 }
 
 
 void loginAdmin(dataapotik &d){
+	
     system("cls");
     cout << "== ANDA LOGIN SEBAGAI ADMIN ==\n";
     d.admin = "admin";
@@ -241,10 +262,12 @@ void loginAdmin(dataapotik &d){
     cin >> d.a;
     cout << "Masukan password (admin): ";
     cin >> d.b; 
+    
 }
 
 
 void loginUser(dataapotik &d){
+	
     system("cls");
     cout << "== ANDA LOGIN SEBAGAI PELANGGAN ==\n";
     d.user = "user";
@@ -253,10 +276,12 @@ void loginUser(dataapotik &d){
     cin >> d.a;
     cout << "Masukan password (user): ";
     cin >> d.b; 
+    
 }
 
 
 void isidatapasien(dataapotik &d){
+	
     cout << "Selamat Datang Di Apotik K-24" << endl;
     cout << "Silahkan mengisi data diri anda sebelum membeli obat." << endl;
     cout << "Nama\t\t\t: ";
@@ -271,24 +296,32 @@ void isidatapasien(dataapotik &d){
     cout << "Data sudah tercatat." << endl;
     system("pause");
     system("cls");
+    
 }
 
 
 void menunamaobat(dataapotik &d){
+	
     cout << "Selamat Berbelanja " << d.namapasien << endl;
     cout << "Pilihan Obat : " << endl;
+    
     for(int i = 0; i < 20; i++){
+    	
         cout << i+1 << ". " << d.namafungsi[1][i] << endl;
+        
     }
     cout << endl;
+    
 }
 
 
 void detailobat(dataapotik &d){
+	
     d.jumlahobat = 0;
     int i = d.pilihannomorobat - 1; 
 
     if(d.pilihannomorobat >= 1 && d.pilihannomorobat <= 20){
+    	
         cout << "============================== Obat " << d.pilihannomorobat << " ==============================" << endl;
         cout << endl;
         cout << "\tNama obat\t: " << d.namafungsi[1][i] << endl;
@@ -304,20 +337,28 @@ void detailobat(dataapotik &d){
 
         
         if(d.jumlahobat > d.harga_stok[2][i]){
+        	
             cout << "Maaf, stok tidak mencukupi!" << endl;
             d.jumlahobat = 0;
+            
         } else {
+        	
             d.total += d.harga_stok[1][i] * d.jumlahobat;
             d.harga_stok[2][i] -= d.jumlahobat;
             saveStokToFile(d); 
+            
         }
+        
     } else {
+    	
         cout << "Maaf obat yang anda pilih tidak tersedia..." << endl;
+        
     }
 }
 
 
 void pengambilan(dataapotik &d){
+	
     cout << "============================================================================" << endl;
     cout << endl;
     cout << "Pilihan Pengambilan obat" << endl;
@@ -328,11 +369,14 @@ void pengambilan(dataapotik &d){
     cout << "============================================================================" << endl;
     cout << "Pilihan anda (1/2) : ";
     cin >> d.pilihpengambilan;
+    
 }
 
 
 void ongkir(dataapotik &d){
+	
     switch(d.pilihpengambilan){
+    	
         case 1:
             d.biayaongkir = 0;
             break;
@@ -349,28 +393,36 @@ void ongkir(dataapotik &d){
             break;
         default:
             cout << "Pilihan tidak ada..." << endl;
+            
     }
 }
 
 
 void detailpembelian(dataapotik &d){
+	
     cout << "============= TAGIHAN =============" << endl;
     cout << endl;
     cout << "1. Obat\t\t: " << d.total << endl;
     
     if(d.pilihpengambilan == 2){
+    	
         cout << "2. Ongkir\t: " << d.biayaongkir << endl;
+        
     }
     
     cout << endl;
     cout << "Total yang harus anda bayar : " << d.total + d.biayaongkir << endl;
     system("pause");
+    
 }
 
 
 void simpanDataPembelian(dataapotik &d) {
+	
     ofstream file("data_pembelian.txt", ios::app);
+    
     if (file.is_open()) {
+    	
         file << "====================================\n";
         file << "Nama Pasien     : " << d.namapasien << endl;
         file << "Umur            : " << d.umurpasien << endl;
@@ -378,51 +430,69 @@ void simpanDataPembelian(dataapotik &d) {
         file << "Riwayat Penyakit: " << d.riwayatpenyakitpasien << endl;
         file << "Total Obat      : " << d.total << endl;
         if (d.pilihpengambilan == 2) {
+        	
             file << "Biaya Ongkir    : " << d.biayaongkir << endl;
+            
         }
+        
         file << "Total Bayar     : " << d.total + d.biayaongkir << endl;
         file << "Metode Bayar    : " << d.metodebayar << endl;
         file << "====================================\n\n";
         file.close();
+        
     } else {
+    	
         cout << "Gagal menyimpan data ke file!" << endl;
+        
     }
 }
 
 
 void tampilkanDataPembelianDariFile() {
+	
     ifstream file("data_pembelian.txt");
+    
     if (file.is_open()) {
+    	
         string line;
         while (getline(file, line)) {
             cout << line << endl;
         }
         file.close();
+        
     } else {
+    	
         cout << "Belum ada data pembelian!" << endl;
+        
     }
 }
 
 
 void tampilStok(dataapotik &d) {
+	
     cout << "========== STOK OBAT ==========" << endl;
+    
     for(int i = 0; i < 20; i++){
+    	
         cout << i+1 << ". " << setw(30) << setfill(' ') << d.namafungsi[1][i] 
              << " | Stok: " << setw(3) << d.harga_stok[2][i] 
              << " | Harga: Rp." << setw(6) << d.harga_stok[1][i] 
              << " | Fungsi: " << d.namafungsi[2][i] << endl;
+             
     }
     cout << "===============================" << endl;
 }
 
 
 void metodebayar(dataapotik &d){
+	
     cout << "Pilih metode bayar : " << endl;
     cout << "1. Transfer Bank" << endl;
     cout << "2. Qris" << endl;
     cout << "3. Cash" << endl;
     cout << "Masukkan Pilihan : ";
     cin >> d.metodebayarpilih;
+    
     if(d.metodebayarpilih == 1){
         d.metodebayar = "Transfer Bank";
     } else if(d.metodebayarpilih == 2){
@@ -433,12 +503,16 @@ void metodebayar(dataapotik &d){
         cout << "Pilihan tidak ada...." << endl;
         d.metodebayar = "Belum dipilih";
     }
+
 }
 
 
 void datapasien(dataapotik &d){
+	
     ofstream file("data_pasien.txt", ios::app);
+    
     if (file.is_open()) {
+    	
         file << "====================================\n";
         file << "Nama Pasien     : " << d.namapasien << endl;
         file << "Umur            : " << d.umurpasien << endl;
@@ -446,23 +520,33 @@ void datapasien(dataapotik &d){
         file << "Riwayat Penyakit: " << d.riwayatpenyakitpasien << endl;
         file << "====================================\n\n";
         file.close();
+        
     } else {
+    	
         cout << "Gagal menyimpan data ke file!" << endl;
+        
     }
 }
 
 
 void cetakStruk(dataapotik &d){
+	
     ofstream file("struk.txt");
+    
     if (file.is_open()) {
+    	
         file << "=============== STRUK ANDA ===============" << endl;
         file << "Nama Pasien      : " << d.namapasien << endl;
         file << "------------------------------------------" << endl;
+        
         for(int i = 0; i < d.batas; i++){
+        	
             int idx = d.simpan[i] - 1;
             file << "Obat             : " << d.namafungsi[1][idx] 
                  << " (" << d.temp[i] << " x Rp." << d.harga_stok[1][idx] << ")" << endl;
+                 
         }
+        
         file << "------------------------------------------" << endl;
         if(d.pilihpengambilan == 2){
             file << "Ongkir           : Rp." << d.biayaongkir << endl;
@@ -472,14 +556,19 @@ void cetakStruk(dataapotik &d){
         file << "TOTAL            : Rp." << d.total + d.biayaongkir << endl;
         file << "==========================================" << endl;
         file.close();
+        
     } else {
+    	
         cout << "Gagal menyimpan struk ke file!" << endl;
+        
     }
 }
 
 
 void tampilStruk(){
+	
     ifstream file("struk.txt");
+    
     if (file.is_open()) {
         string line;
         while (getline(file, line)) {
@@ -489,30 +578,39 @@ void tampilStruk(){
     } else {
         cout << "Belum ada struk yang dicetak!" << endl;
     }
+    
 }
 
+
 void tempStruk(dataapotik &d){
+	
     d.temp[d.y] = d.jumlahobat;
     d.batas++;
     d.x++;
     d.y++;
+    
 }
 
 void hasilpilihmenuutamaUser(dataapotik &d) {
+	
     switch (d.pilihmenuUser) {
+    	
         case 1:
             system("cls");
             isidatapasien(d);
             do {
+            	
                 menunamaobat(d);
                 cout << "Masukkan nomor obat yang anda pilih (1-20): ";
                 cin >> d.pilihannomorobat;
                 if(d.pilihannomorobat < 1 || d.pilihannomorobat > 20) {
+                	
                     cout << "Nomor obat tidak valid!" << endl;
                     system("pause");
                     system("cls");
                     continue;
                 }
+                
                 d.simpan[d.x] = d.pilihannomorobat;
                 system("cls");
                 detailobat(d);
@@ -522,12 +620,15 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
                 cout << "Apakah ada obat lain yang akan anda beli? (y/n) : ";
                 cin >> d.belilagi;
                 system("cls");
+                
             } while (d.belilagi != 'n' && d.belilagi != 'N');
             
             do {
+            	
                 pengambilan(d);
                 system("cls");
                 ongkir(d);
+                
             } while(d.pilihpengambilan == 0);
             
             detailpembelian(d);
@@ -561,13 +662,17 @@ void hasilpilihmenuutamaUser(dataapotik &d) {
 
         default:
             cout << "Pilihan tidak valid. coba lagi.\n";
+            
     }
 }
 
 
 void tampilDataPasien(){
+	
     ifstream file("data_pasien.txt");
+    
     if (file.is_open()) {
+    	
         string line;
         while (getline(file, line)) {
             cout << line << endl;
@@ -576,72 +681,111 @@ void tampilDataPasien(){
     } else {
         cout << "Belum ada data pasien!" << endl;
     }
+    
+}
+
+
+void laporankeuangan(dataapotik &d){
+	
+	cout<<"=== Laporan Keuangan Apotik K-24 ==="<<endl;
+	cout<<endl;
+	cout<<"Pemasukkan Bulan Ini : "<<d.total + d.biayaongkir<<endl;
+	cout<<endl;
+	cout<<"===================================="<<endl;
+	
 }
 
 
 void hasilpilihmenuutamaAdmin(dataapotik &d){
+	
     switch (d.pilihmenuAdmin) {
+    	
         case 1:
             system("cls");
             tampilStok(d);
             system("pause"); 
             break;
+            
         case 2:
             system("cls");
             cout << "== DATA PEMBELIAN OBAT ==" << endl;
             tampilkanDataPembelianDariFile();
             system("pause");
             break;
+            
         case 3:
             system("cls");
             cout << "== DATA PASIEN ==" << endl;
             tampilDataPasien();
             system("pause");
             break;
+            
         case 4:
             system("cls");
-            cout << "Fitur laporan keuangan belum tersedia\n\n";
+            laporankeuangan(d);
             system("pause");
             break;
+            
         case 5:
             cout << "Terima kasih! Program selesai.\n";
             break;
+            
         default:
             cout << "Pilihan tidak valid. coba lagi.\n";
+            
     }
+    
 }
 
 
 void hasillogin(dataapotik &d){
+	
     do {
         menulogin(d);
+        
         if(d.pilihmenuLogin == 1){
+        	
             loginAdmin(d);
+            
             if(d.a == d.admin && d.b == d.passwordAdmin){
+            	
                 do {
                     menuutama_admin(d);
                     hasilpilihmenuutamaAdmin(d);
                 } while(d.pilihmenuAdmin != 5);
+                
             } else {
+            	
                 cout << "Login gagal! Username atau password salah." << endl;
                 system("pause");
+                
             }
         } else if(d.pilihmenuLogin == 2){
+        	
             loginUser(d);
             if(d.a == d.user && d.b == d.passwordUser){
+            	
                 do {
                     menuutama_pelanggan(d);
                     hasilpilihmenuutamaUser(d);
                 } while(d.pilihmenuUser != 5);
+                
             } else {
+            	
                 cout << "Login gagal! Username atau password salah." << endl;
                 system("pause");
+                
             }
+            
         } else if(d.pilihmenuLogin > 3 || d.pilihmenuLogin < 1){
+        	
             cout << "Pilihan tidak valid!" << endl;
             system("pause");
+            
         }
+        
     } while(d.pilihmenuLogin != 3);
+    
     cout << "Terimakasih telah menggunakan program" << endl;
 }
 
