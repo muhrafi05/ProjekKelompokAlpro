@@ -172,7 +172,7 @@ void loadStokFromFile(dataapotik &d) {
         
     } else {
         
-        isidataobat(d)
+        isidataobat(d);
         
         saveStokToFile(d); 
     }
