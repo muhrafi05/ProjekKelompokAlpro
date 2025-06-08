@@ -19,6 +19,7 @@ struct dataapotik{
     int batas = 0;
     int x = 0;
     int y = 0;
+    int jumlahrestock;
     int simpan[100];
     int temp[100];
     char belilagi;
@@ -223,7 +224,8 @@ void menuutama_admin(dataapotik &d){
     cout << "| 2. Data Pembelian                              |\n";
     cout << "| 3. Data Pasien                                 |\n";
     cout << "| 4. Laporan Keuangan                            |\n";
-    cout << "| 5. Keluar                                      |\n";
+    cout << "| 5. Restok obat                                 |\n";
+    cout << "| 6. Keluar                                      |\n";
     cout << "|"<< setw(51) << setfill('=') << "|\n";
     cout << "Masukkan pilihan (1-5): ";
     cin >> d.pilihmenuAdmin;
@@ -317,43 +319,128 @@ void menunamaobat(dataapotik &d){
 
 void detailobat(dataapotik &d){
 	
-    d.jumlahobat = 0;
-    int i = d.pilihannomorobat - 1; 
-
-    if(d.pilihannomorobat >= 1 && d.pilihannomorobat <= 20){
-    	
-        cout << "============================== Obat " << d.pilihannomorobat << " ==============================" << endl;
-        cout << endl;
-        cout << "\tNama obat\t: " << d.namafungsi[1][i] << endl;
-        cout << "\tHarga\t\t: " << d.harga_stok[1][i] << (d.pilihannomorobat < 16 ? "/strip" : 
-              (d.pilihannomorobat >= 16 && d.pilihannomorobat < 18 ? "/15 ml" : 
-              (d.pilihannomorobat == 18 ? "/6 pcs" : "/12 pcs"))) << endl;
-        cout << "\tStok Tersedia\t: " << d.harga_stok[2][i] << endl;
-        cout << "\tKegunaan Obat\t: " << d.namafungsi[2][i] << endl << endl;
-        cout << "====================================================================" << endl;
-        cout << endl;
-        cout << "Jumlah obat yang dibeli : ";
-        cin >> d.jumlahobat;
-
         
-        if(d.jumlahobat > d.harga_stok[2][i]){
+    d.jumlahobat = 0;
+	
+	if(d.pilihannomorobat<16){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/strip"<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
+			if(d.jumlahobat > d.harga_stok[2][i-1]){
         	
             cout << "Maaf, stok tidak mencukupi!" << endl;
             d.jumlahobat = 0;
             
         } else {
         	
-            d.total += d.harga_stok[1][i] * d.jumlahobat;
-            d.harga_stok[2][i] -= d.jumlahobat;
+            saveStokToFile(d); 
+            
+        }
+		}
+	
+	}else if(d.pilihannomorobat>=16 && d.pilihannomorobat<18){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/15 ml"<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
+			if(d.jumlahobat > d.harga_stok[2][i-1]){
+        	
+            cout << "Maaf, stok tidak mencukupi!" << endl;
+            d.jumlahobat = 0;
+            
+        } else {
+        	
+            saveStokToFile(d); 
+            
+        }
+		}
+		
+	}else if(d.pilihannomorobat==18){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/6 pcs "<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
+			if(d.jumlahobat > d.harga_stok[2][i-1]){
+        	
+            cout << "Maaf, stok tidak mencukupi!" << endl;
+            d.jumlahobat = 0;
+            
+        } else {
+        	
+            saveStokToFile(d); 
+            
+        } 
+		}
+		
+	}else if(d.pilihannomorobat>=19 && d.pilihannomorobat<21){
+		
+		for(int i=d.pilihannomorobat;i<d.pilihannomorobat+1;i++){
+			cout<<"============================== Obat "<<i<<" =============================="<<endl;
+			cout<<endl;
+			cout<<"\tNama obat\t: "<<d.namafungsi[1][i-1]<<endl;
+			cout<<"\tHarga\t\t: "<<d.harga_stok[1][i-1]<<"/12 pcs "<<endl;
+			cout<<"\tStok Teredia\t: "<<d.harga_stok[2][i-1]<<endl;
+			cout<<"\tKegunaan Obat\t: "<<d.namafungsi[2][i-1]<<endl<<endl;
+			cout<<"===================================================================="<<endl;
+			cout<<endl;
+			cout<<"Jumlah obat yang dibeli : ";
+			cin>>d.jumlahobat;
+		
+			d.total+=d.harga_stok[1][i-1]*d.jumlahobat;
+			d.harga_stok[2][i-1]-=d.jumlahobat;
+			if(d.jumlahobat > d.harga_stok[2][i]){
+        	
+            cout << "Maaf, stok tidak mencukupi!" << endl;
+            d.jumlahobat = 0;
+            
+        } else {
+        	
             saveStokToFile(d); 
             
         }
         
-    } else {
-    	
-        cout << "Maaf obat yang anda pilih tidak tersedia..." << endl;
-        
-    }
+		}
+		
+	}else{
+		
+		cout<<"Maaf obat yang anda pilih tidak tersedia..."<<endl;
+		cout<<endl;
+	}
+	
 }
 
 
@@ -591,6 +678,56 @@ void tempStruk(dataapotik &d){
     
 }
 
+
+void restockObat(dataapotik &d) {
+   
+    cout << "=== RESTOCK OBAT ===" << endl;
+    cout << "Daftar Obat:" << endl;
+    
+   
+    cout << "+------+--------------------------------+---------+" << endl;
+    cout << "| No.  | Nama Obat                      | Stok    |" << endl;
+    cout << "+------+--------------------------------+---------+" << endl;
+    
+    for(int i = 0; i < 20; i++) {
+        cout << "| " << setw(4)<< i+1 << " | " 
+             << setw(30)<< d.namafungsi[1][i] << " | " 
+             << setw(7)<< d.harga_stok[2][i] << " |" << endl;
+    }
+    cout << "+------+--------------------------------+---------+" << endl;
+    
+    int nomorObat;
+    cout << "\nMasukkan nomor obat yang akan di-restock (1-20): ";
+    cin >> nomorObat;
+    
+    if(nomorObat < 1 || nomorObat > 20) {
+        cout << "Nomor obat tidak valid!" << endl;
+        system("pause");
+        return;
+    }
+    
+    int indeks = nomorObat - 1;
+    cout << "Obat yang dipilih: " << d.namafungsi[1][indeks] << endl;
+    cout << "Stok saat ini: " << d.harga_stok[2][indeks] << endl;
+    cout << "Masukkan jumlah stok yang akan ditambahkan: ";
+    cin >> d.jumlahrestock;
+    
+    if(d.jumlahrestock <= 0) {
+        cout << "Jumlah restock harus lebih dari 0!" << endl;
+        system("pause");
+        return;
+    }
+    
+    d.harga_stok[2][indeks] += d.jumlahrestock;
+    saveStokToFile(d);
+    
+    cout << "\nRestock berhasil!" << endl;
+    cout << "Stok " << d.namafungsi[1][indeks] << " sekarang: " 
+         << d.harga_stok[2][indeks] << endl;
+    
+}
+
+
 void hasilpilihmenuutamaUser(dataapotik &d) {
 	
     switch (d.pilihmenuUser) {
@@ -727,7 +864,9 @@ void hasilpilihmenuutamaAdmin(dataapotik &d){
             break;
             
         case 5:
-            cout << "Terima kasih! Program selesai.\n";
+            system("cls");
+            restockObat(d);
+            system("pause");
             break;
             
         default:
