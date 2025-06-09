@@ -37,6 +37,7 @@ struct dataapotik{
     string passwordUser;
     int metodebayarpilih;
     string metodebayar;
+    int cash;
     
 };
 
@@ -225,9 +226,10 @@ void menuutama_admin(dataapotik &d){
     cout << "| 3. Data Pasien                                 |\n";
     cout << "| 4. Laporan Keuangan                            |\n";
     cout << "| 5. Restok obat                                 |\n";
-    cout << "| 6. Keluar                                      |\n";
+    cout << "| 6. Hapus Obat                                  |\n";
+    cout << "| 7. Keluar                                      |\n";
     cout << "|"<< setw(51) << setfill('=') << "|\n";
-    cout << "Masukkan pilihan (1-5): ";
+    cout << "Masukkan pilihan (1-7): ";
     cin >> d.pilihmenuAdmin;
     cin.ignore();
     
@@ -586,11 +588,24 @@ void metodebayar(dataapotik &d){
         d.metodebayar = "Qris";
     } else if(d.metodebayarpilih == 3){
         d.metodebayar = "Cash";
+        cout<<"Anda memilih metode bayar menggunakan cash."<<endl;
+        cout<<"Total tagihan anda : "<<d.total + d.biayaongkir<<endl;
+        cout<<"Masukkan nominal uang anda : ";
+        cin>>d.cash;
+        cout<<endl;
+        cout<<"Anda membayar sejumlah : "<<d.cash<<endl;
+        
+        if(d.cash>d.total + d.biayaongkir){
+        	
+        	cout<<"Kembalian anda : "<<d.cash-(d.total + d.biayaongkir)<<endl;
+		}else if(d.cash<d.total + d.biayaongkir){
+			
+			cout<<"Maaf uang anda kurang....."<<endl;
+		}
     } else {
         cout << "Pilihan tidak ada...." << endl;
         d.metodebayar = "Belum dipilih";
     }
-
 }
 
 
@@ -725,6 +740,49 @@ void restockObat(dataapotik &d) {
     cout << "Stok " << d.namafungsi[1][indeks] << " sekarang: " 
          << d.harga_stok[2][indeks] << endl;
     
+}
+
+
+void hapusObat(dataapotik &d) {
+    system("cls");
+    cout << "=== HAPUS OBAT ===" << endl;
+    tampilStok(d);
+    
+    int nomorObat;
+    
+	cout << "\nMasukkan nomor obat yang ingin dihapus (1-20): ";
+    cin >> nomorObat;
+
+    if(nomorObat < 1 || nomorObat > 20) {
+        cout << "Nomor obat tidak valid!" << endl;
+        system("pause");
+        return;
+    }
+
+    int indeks = nomorObat - 1;
+
+
+    cout << "\nAnda yakin ingin menghapus obat '" << d.namafungsi[1][indeks] << "'? (y/n): ";
+    
+    char konfirmasi;
+    
+	cin >> konfirmasi;
+
+    if(konfirmasi == 'y' || konfirmasi == 'Y') {
+
+        d.namafungsi[1][indeks] = "";
+        d.harga_stok[1][indeks] = 0;
+        d.harga_stok[2][indeks] = 0;
+        d.namafungsi[2][indeks] = "";
+
+        saveStokToFile(d);
+
+        cout << "\nObat berhasil dihapus!" << endl;
+    } else {
+        cout << "\nPenghapusan dibatalkan." << endl;
+    }
+
+
 }
 
 
@@ -869,6 +927,15 @@ void hasilpilihmenuutamaAdmin(dataapotik &d){
             system("pause");
             break;
             
+        case 6:
+        	system("cls");
+        	hapusObat(d);
+        	system("pause");
+        	break;
+        case 7:
+            cout << "Keluar dari menu admin..." << endl;
+            break;
+            
         default:
             cout << "Pilihan tidak valid. coba lagi.\n";
             
@@ -891,7 +958,7 @@ void hasillogin(dataapotik &d){
                 do {
                     menuutama_admin(d);
                     hasilpilihmenuutamaAdmin(d);
-                } while(d.pilihmenuAdmin != 6);
+                } while(d.pilihmenuAdmin != 7);
                 
             } else {
             	
