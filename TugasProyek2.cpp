@@ -891,7 +891,7 @@ void hasillogin(dataapotik &d){
                 do {
                     menuutama_admin(d);
                     hasilpilihmenuutamaAdmin(d);
-                } while(d.pilihmenuAdmin != 5);
+                } while(d.pilihmenuAdmin != 6);
                 
             } else {
             	
